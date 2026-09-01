@@ -1553,7 +1553,7 @@ body {
 }
 
 /* ==========================================================================
-   Application Wizard Page (/apply)
+   Application Wizard Form System (/apply)
    ========================================================================== */
 
 .application-wizard-page {
@@ -1562,19 +1562,46 @@ body {
   min-height: 85vh;
 }
 
+.wizard-page-header {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.back-home-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.wizard-main-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--navy-900);
+  margin-bottom: 4px;
+  letter-spacing: -0.03em;
+}
+
+.wizard-main-subtitle {
+  font-size: 0.95rem;
+  color: var(--navy-500);
+}
+
 .wizard-stepper-card {
   padding: 14px 20px;
   margin-bottom: 24px;
   background: #ffffff;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
 }
 
 .stepper-track {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 600px;
+  min-width: 650px;
 }
 
 .stepper-node {
@@ -1595,12 +1622,14 @@ body {
   font-weight: 800;
   font-size: 0.88rem;
   color: var(--navy-400);
+  transition: var(--transition);
 }
 
 .stepper-node.is-active .node-circle {
   background: var(--sdb-green-800);
   border-color: var(--sdb-green-800);
   color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(13, 104, 79, 0.15);
 }
 
 .stepper-node.is-completed .node-circle {
@@ -1609,28 +1638,407 @@ body {
   color: #ffffff;
 }
 
+.node-label-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.node-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--navy-900);
+}
+
+.node-sub {
+  font-size: 0.7rem;
+  color: var(--navy-400);
+}
+
+/* Wizard Form Body */
 .wizard-body-wrapper {
-  padding: 32px;
+  padding: 36px;
   background: #ffffff;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
+  box-shadow: 0 4px 20px rgba(20, 40, 63, 0.04);
+  margin-bottom: 24px;
 }
 
-.form-input, .form-select, .form-textarea {
+.step-header-text {
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.flex-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.step-main-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--navy-900);
+  margin-bottom: 4px;
+}
+
+.step-main-sub {
+  font-size: 0.9rem;
+  color: var(--navy-500);
+}
+
+/* Form 2-Column Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px 24px;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+.grid-span-2 {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .grid-span-2 {
+    grid-column: span 1;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.label-icon {
+  color: var(--sdb-green-800);
+  flex-shrink: 0;
+}
+
+.required-star {
+  color: #b91c1c;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+[dir="rtl"] .required-star {
+  margin-left: 0;
+  margin-right: 2px;
+}
+
+.form-input, 
+.form-select, 
+.form-textarea {
   width: 100%;
-  padding: 11px 14px;
+  height: 44px;
+  padding: 0 14px;
   background: #ffffff;
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-sm);
   font-size: 0.92rem;
   color: var(--navy-900);
+  transition: var(--transition);
+  font-family: inherit;
 }
 
-.form-input:focus, .form-select:focus, .form-textarea:focus {
+.form-input:focus, 
+.form-select:focus, 
+.form-textarea:focus {
   outline: none;
   border-color: var(--sdb-green-800);
   box-shadow: 0 0 0 3px rgba(13, 104, 79, 0.12);
 }
+
+.form-textarea {
+  height: auto;
+  min-height: 90px;
+  padding: 10px 14px;
+  resize: vertical;
+}
+
+.form-hint-text {
+  font-size: 0.78rem;
+  color: var(--navy-500);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.wizard-footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+/* Step 4 Documents Upload */
+.documents-upload-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.doc-upload-box {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 22px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 768px) {
+  .doc-upload-box {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+.doc-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.doc-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy-900);
+}
+
+.doc-desc {
+  font-size: 0.8rem;
+  color: var(--navy-500);
+}
+
+.dropzone-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: #ffffff;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.dropzone-area:hover {
+  background: var(--bg-sage-light);
+  border-color: var(--sdb-green-800);
+}
+
+.dropzone-icon {
+  color: var(--sdb-green-800);
+  margin-bottom: 4px;
+}
+
+.dropzone-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy-900);
+}
+
+.dropzone-sub {
+  font-size: 0.7rem;
+  color: var(--navy-400);
+}
+
+.uploaded-file-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-sage-light);
+  border: 1px solid rgba(13, 104, 79, 0.25);
+  border-radius: var(--radius-sm);
+}
+
+.uploaded-meta {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.uploaded-filename {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--sdb-green-600);
+}
+
+.uploaded-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: var(--sdb-green-800);
+  font-weight: 600;
+}
+
+.btn-icon-delete {
+  background: transparent;
+  border: none;
+  color: #b91c1c;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Step 5 Review */
+.review-blocks-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.review-card {
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+}
+
+.review-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.review-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy-900);
+}
+
+.edit-jump-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--sdb-green-800);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.review-grid-data {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .review-grid-data {
+    grid-template-columns: 1fr;
+  }
+}
+
+.data-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.data-label {
+  font-size: 0.75rem;
+  color: var(--navy-400);
+  font-weight: 600;
+}
+
+.data-val {
+  font-size: 0.9rem;
+  color: var(--navy-900);
+  font-weight: 600;
+}
+
+.review-docs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.review-doc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: var(--bg-sage-light);
+  border: 1px solid rgba(13, 104, 79, 0.25);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--sdb-green-600);
+}
+
+.review-submit-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 28px;
+  background: var(--bg-sage-light);
+  border: 1px solid rgba(13, 104, 79, 0.25);
+  border-radius: var(--radius-lg);
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .review-submit-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.submit-banner-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--navy-900);
+  margin-bottom: 2px;
+}
+
+.submit-banner-sub {
+  font-size: 0.85rem;
+  color: var(--navy-500);
+}
+
+.run-ai-big-btn {
+  font-size: 0.95rem;
+  padding: 12px 24px;
+}
+
 
 /* ==========================================================================
    Floating Demo Toolbar & Scenario Editor Modal
