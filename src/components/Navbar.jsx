@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Sparkles, Globe, Menu, X, ArrowRight, ArrowLeft, LogIn } from 'lucide-react';
+import { Sparkles, Globe, Menu, X, ArrowRight, ArrowLeft, LogIn, ShieldCheck } from 'lucide-react';
 
 export function Navbar({ activePage, setActivePage, onOpenLogin }) {
   const { t, lang, toggleLanguage, isArabic } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: t.nav.home, id: 'home' },
-    { label: t.nav.howItWorks, id: 'how-it-works' },
-    { label: t.nav.features, id: 'readiness' },
-    { label: t.nav.impact, id: 'impact' },
+    { label: isArabic ? "عن المنظومة" : "About SDB", id: 'home' },
+    { label: isArabic ? "كيف تعمل" : "Pathways", id: 'how-it-works' },
+    { label: isArabic ? "الجاهزية التمويلية" : "Readiness", id: 'readiness' },
+    { label: isArabic ? "الأثر التنموي" : "Impact", id: 'impact' },
   ];
 
   const handleNavClick = (id) => {
@@ -37,118 +37,112 @@ export function Navbar({ activePage, setActivePage, onOpenLogin }) {
 
   return (
     <header className="navbar-wrapper">
-      {/* Top Hackathon Announcement Bar */}
+      {/* Top Demo Context Bar */}
       <div className="top-banner">
         <div className="container banner-inner">
-          <span className="banner-badge">
-            <Sparkles size={13} /> SDB Hackathon 2026
+          <span>
+            {isArabic 
+              ? "مفهوم تجربة القطاع التنموي السعودي · منصة إيكومات للتمويل التنموي الذكي · نموذج تجريبي" 
+              : "Saudi public-sector experience concept · SDB EcoMat demonstration · Prototype"}
           </span>
-          <p className="banner-text">{t.hackathonNotice}</p>
         </div>
       </div>
 
-      {/* Main Sticky Navbar */}
-      <div className="main-nav glass-panel">
+      {/* Main SDB EcoMat Header Bar */}
+      <div className="main-nav">
         <div className="container nav-container">
-          {/* Brand Logo */}
+          {/* Brand Logo matching reference */}
           <div 
             className="brand-logo" 
             onClick={() => { setActivePage('landing'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             style={{ cursor: 'pointer' }}
           >
-            <div className="logo-icon-box">
-              <img src="/logo.svg" alt="EcoMat Logo" className="brand-svg-logo" />
+            <div className="sdb-square-badge">
+              SDB
             </div>
             <div className="brand-text-group">
-              <span className="brand-title">{t.brandName}</span>
-              <span className="brand-tagline">{t.brandTagline}</span>
+              <span className="brand-title">
+                {isArabic ? "بنك التنمية الاجتماعية" : "Social Development Bank"}
+              </span>
+              <small className="brand-tagline">
+                {isArabic ? "إيكومات · EcoMat 2030" : "SDB 2030 · EcoMat"}
+              </small>
             </div>
           </div>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Nav Links */}
           <nav className="desktop-links">
             {navLinks.map((link) => (
               <button 
-                key={link.id} 
-                onClick={() => handleNavClick(link.id)} 
+                key={link.id}
                 className="nav-link-btn"
+                onClick={() => handleNavClick(link.id)}
               >
                 {link.label}
               </button>
             ))}
           </nav>
 
-          {/* Right Action Controls */}
+          {/* Right Actions */}
           <div className="nav-actions">
-            {/* Language Switcher */}
+            {/* Language Switch */}
             <button 
               className="btn btn-secondary btn-sm lang-toggle-btn"
               onClick={toggleLanguage}
-              title={isArabic ? "Switch to English" : "التحويل إلى العربية"}
+              title="Toggle English / Arabic"
             >
-              <Globe size={16} />
-              <span className="lang-text">{isArabic ? "English" : "العربية"}</span>
+              <Globe size={13} />
+              <span>{lang === 'en' ? 'العربية' : 'English'}</span>
             </button>
 
-            {/* Login / Portal Button */}
+            {/* Login / Nafath */}
             <button 
-              className="btn btn-ghost btn-sm login-btn"
+              className="btn btn-secondary btn-sm login-btn"
               onClick={onOpenLogin}
             >
-              <LogIn size={16} />
+              <LogIn size={13} />
               <span>{t.nav.login}</span>
             </button>
 
-            {/* Start Application CTA */}
-            {activePage !== 'apply' ? (
-              <button 
-                className="btn btn-primary btn-sm cta-btn"
-                onClick={handleApplyClick}
-              >
-                <span>{t.nav.startApplication}</span>
-                <ArrowIcon size={16} />
-              </button>
-            ) : (
-              <button 
-                className="btn btn-secondary btn-sm"
-                onClick={() => setActivePage('landing')}
-              >
-                <span>{t.wizard.buttons.backToHome}</span>
-              </button>
-            )}
+            {/* Primary Action */}
+            <button 
+              className="btn btn-primary btn-sm"
+              onClick={handleApplyClick}
+            >
+              <span>{isArabic ? "فحص الجاهزية والتقديم" : "Enter EcoMat"}</span>
+              <ArrowIcon size={14} />
+            </button>
 
-            {/* Mobile Hamburger Toggle */}
+            {/* Mobile Menu Toggle */}
             <button 
               className="mobile-toggle-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle navigation menu"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="mobile-menu-drawer glass-panel">
+        <div className="mobile-menu-drawer animate-fade-in">
           <div className="mobile-links">
             {navLinks.map((link) => (
               <button 
-                key={link.id} 
-                onClick={() => handleNavClick(link.id)} 
+                key={link.id}
                 className="mobile-nav-link"
+                onClick={() => handleNavClick(link.id)}
               >
                 {link.label}
               </button>
             ))}
-            <hr className="drawer-divider" />
-            <button className="btn btn-secondary w-full" onClick={onOpenLogin}>
-              <LogIn size={16} />
-              <span>{t.nav.login}</span>
-            </button>
-            <button className="btn btn-primary w-full" onClick={handleApplyClick}>
-              <span>{t.nav.startApplication}</span>
+            <button 
+              className="btn btn-primary w-full mt-2"
+              onClick={handleApplyClick}
+            >
+              <span>{isArabic ? "فحص الجاهزية والتقديم" : "Enter EcoMat"}</span>
               <ArrowIcon size={16} />
             </button>
           </div>

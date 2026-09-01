@@ -7,10 +7,8 @@ import {
   ArrowRight, 
   ArrowLeft, 
   ShieldCheck, 
-  TrendingUp, 
-  Zap, 
-  FileText,
-  Building2
+  Building2,
+  FileText
 } from 'lucide-react';
 
 export function Hero({ onStartApplication, onScrollToHowItWorks }) {
@@ -19,97 +17,96 @@ export function Hero({ onStartApplication, onScrollToHowItWorks }) {
 
   return (
     <section id="home" className="hero-section">
-      {/* Background Decorative Gradients */}
-      <div className="hero-bg-orb orb-1"></div>
-      <div className="hero-bg-orb orb-2"></div>
-
       <div className="container hero-container">
-        {/* Left Column: Hero Content */}
+        {/* Left Column: Hero Content styled matching reference */}
         <div className="hero-content">
-          <div className="hero-badge animate-fade-in">
-            <span className="badge-pulse-dot"></span>
-            <Sparkles size={14} className="badge-icon" />
-            <span>{t.hero.tag}</span>
+          <div className="hero-sdb-tag animate-fade-in">
+            <span className="sdb-concept-badge">
+              <ShieldCheck size={13} />
+              <span>{isArabic ? "مفهوم التحول التنموي 2030" : "SDB 2030 transformation concept"}</span>
+            </span>
+            <span className="sdb-concept-sub">
+              {isArabic ? "نموذج تجريبي تفاعلي" : "Demonstration prototype"}
+            </span>
           </div>
 
+          <p className="hero-bank-name animate-fade-in">
+            {isArabic ? "بنك التنمية الاجتماعية" : "Social Development Bank"}
+          </p>
+
           <h1 className="hero-headline animate-fade-in">
-            {t.hero.headline}
+            {isArabic ? "إيكومات · EcoMat" : "SDB EcoMat"}
           </h1>
 
+          <h2 className="hero-subheadline-lead animate-fade-in">
+            {isArabic 
+              ? "أتمتة منظومة التمويل التنموي الذكي للمنشآت" 
+              : "Ecosystem Automation for Development Finance"}
+          </h2>
+
           <p className="hero-subheadline animate-fade-in">
-            {t.hero.subheadline}
+            {isArabic
+              ? "تمكين المشاريع ورواد الأعمال السعوديين عبر رحلة تمويلية ذكية، تقييم فوري للجاهزية، نموذج سداد مرن يتكيف مع النمو، وأثر اجتماعي قابل للقياس."
+              : "Supporting Saudi businesses through intelligent financing, connected services, flexible repayment, and measurable social impact—from first application through long-term growth."}
           </p>
 
           <div className="hero-cta-group animate-fade-in">
             <button 
-              className="btn btn-primary btn-lg hero-btn-primary"
+              className="btn btn-primary btn-lg"
               onClick={onStartApplication}
             >
-              <Zap size={18} />
-              <span>{t.hero.ctaReadiness}</span>
-              <ArrowIcon size={18} />
+              <span>{isArabic ? "التقديم وفحص الجاهزية" : "Apply for Financing"}</span>
+              <ArrowIcon size={16} />
             </button>
 
             <button 
-              className="btn btn-secondary btn-lg hero-btn-secondary"
+              className="btn btn-secondary btn-lg"
               onClick={onScrollToHowItWorks}
             >
-              <span>{t.hero.ctaHowItWorks}</span>
+              <span>{isArabic ? "استكشاف المسارات" : "Explore Programs"}</span>
             </button>
           </div>
 
-          {/* Trust Highlights */}
-          <div className="hero-trust-row">
+          {/* Trust Highlights matching reference demo site */}
+          <div className="hero-trust-row animate-fade-in">
             <div className="trust-item">
-              <ShieldCheck size={18} className="trust-icon text-primary" />
-              <span>{isArabic ? "متوافق مع معايير بنك التنمية" : "Aligned with SDB Standards"}</span>
+              <CheckCircle2 size={16} className="text-sdb" />
+              <span>{isArabic ? "قرارات تمويلية بإشراف بشري واعتماد مصرفي" : "Human-controlled funding decisions"}</span>
             </div>
             <div className="trust-item">
-              <Sparkles size={18} className="trust-icon text-gold" />
-              <span>{isArabic ? "تشخيص فوري بالذكاء الاصطناعي" : "Instant AI Diagnostic"}</span>
-            </div>
-            <div className="trust-item">
-              <TrendingUp size={18} className="trust-icon text-primary" />
-              <span>{isArabic ? "خطة تعافي في حال عدم القبول" : "Actionable Recovery Plans"}</span>
+              <CheckCircle2 size={16} className="text-sdb" />
+              <span>{isArabic ? "ذكاء اصطناعي تفاعلي وبيانات محاكاة" : "Simulated intelligence and financial data"}</span>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Interactive Dashboard Mockup */}
-        <div className="hero-mockup-col animate-float">
+        {/* Right Column: Clean Interactive Readiness & Ecosystem Card */}
+        <div className="hero-mockup-col animate-fade-in">
           <div className="mockup-glass-card">
-            {/* Top Bar of Mockup */}
+            {/* Header bar */}
             <div className="mockup-header">
-              <div className="mockup-dots">
-                <span className="dot dot-red"></span>
-                <span className="dot dot-yellow"></span>
-                <span className="dot dot-green"></span>
-              </div>
-              <span className="mockup-title-bar">{t.hero.dashboardPreview.title}</span>
+              <span className="mockup-title-bar">
+                {isArabic ? "لوحة الجاهزية التمويلية الذكية" : "AI Financing Readiness Preview"}
+              </span>
               <span className="mockup-live-pill">
-                <span className="live-dot"></span> LIVE
+                <span className="live-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: 'currentColor', display: 'inline-block' }}></span>
+                LIVE
               </span>
             </div>
 
-            {/* Main Score Area */}
+            {/* Score Area */}
             <div className="mockup-score-section">
               <div className="score-dial-wrap">
                 <svg className="score-svg-circle" viewBox="0 0 120 120">
-                  <circle
-                    className="score-circle-bg"
-                    cx="60"
-                    cy="60"
-                    r="50"
-                    strokeWidth="10"
-                  />
+                  <circle className="score-circle-bg" cx="60" cy="60" r="50" strokeWidth="9" />
                   <circle
                     className="score-circle-fill"
                     cx="60"
                     cy="60"
                     r="50"
-                    strokeWidth="10"
+                    strokeWidth="9"
                     strokeDasharray="314.159"
-                    strokeDashoffset="40.84" /* 87% progress */
+                    strokeDashoffset="40.84"
                   />
                 </svg>
                 <div className="score-number-box">
@@ -120,45 +117,36 @@ export function Hero({ onStartApplication, onScrollToHowItWorks }) {
 
               <div className="score-summary-text">
                 <span className="badge badge-success mb-2">
-                  <CheckCircle2 size={13} /> {t.hero.dashboardPreview.statusReady}
+                  <CheckCircle2 size={12} /> {t.hero.dashboardPreview.statusReady}
                 </span>
                 <h4 className="score-status-title">
-                  {isArabic ? "جاهزية متقدمة ومطابقة عالية" : "Strong Application Readiness"}
+                  {isArabic ? "مطابقة متقدمة لشروط البنك" : "Strong Application Readiness"}
                 </h4>
                 <p className="score-status-desc">
                   {isArabic 
-                    ? "ملف متكامل مع توصية بتحسين إيرادات الربع الأخير." 
-                    : "Comprehensive dossier with 1 minor financial optimization suggested."}
+                    ? "ملف مكتمل ومستوفٍ لمتطلبات برنامج أفق التمويلي."
+                    : "Complete dossier aligned with SDB Ufuq Financing criteria."}
                 </p>
               </div>
             </div>
 
-            {/* Checklist items in Mockup */}
+            {/* Checklist */}
             <div className="mockup-checklist">
-              <div className="mockup-check-item item-done">
-                <div className="check-icon-circle icon-done">
-                  <CheckCircle2 size={16} />
-                </div>
+              <div className="mockup-check-item">
                 <div className="check-item-details">
                   <span className="check-title">{t.hero.dashboardPreview.eligibility}</span>
                   <span className="check-pct">95%</span>
                 </div>
               </div>
 
-              <div className="mockup-check-item item-done">
-                <div className="check-icon-circle icon-done">
-                  <FileText size={16} />
-                </div>
+              <div className="mockup-check-item">
                 <div className="check-item-details">
                   <span className="check-title">{t.hero.dashboardPreview.documents}</span>
                   <span className="check-pct">88%</span>
                 </div>
               </div>
 
-              <div className="mockup-check-item item-warning">
-                <div className="check-icon-circle icon-warn">
-                  <AlertCircle size={16} />
-                </div>
+              <div className="mockup-check-item">
                 <div className="check-item-details">
                   <span className="check-title">{t.hero.dashboardPreview.financials}</span>
                   <span className="badge badge-warning text-xs">
@@ -168,30 +156,28 @@ export function Hero({ onStartApplication, onScrollToHowItWorks }) {
               </div>
             </div>
 
-            {/* Recommended Product Box in Mockup */}
+            {/* Recommended Product Box */}
             <div className="mockup-recommendation-box">
               <div className="rec-box-top">
                 <span className="rec-box-label">
-                  <Building2 size={14} /> {t.hero.dashboardPreview.recommendedTitle}
+                  <Building2 size={13} /> {t.hero.dashboardPreview.recommendedTitle}
                 </span>
-                <span className="badge badge-sdb">
-                  <Sparkles size={12} /> {t.hero.dashboardPreview.recommendedBadge}
+                <span className="badge badge-sdb text-xs">
+                  <Sparkles size={11} /> 96% {isArabic ? "تطابق" : "Match"}
                 </span>
               </div>
-              <div className="rec-box-body">
-                <h5 className="rec-product-name">{t.hero.dashboardPreview.recommendedProduct}</h5>
-                <p className="rec-product-note">
-                  {isArabic 
-                    ? "سقف تمويلي أعلى حتى 10 ملايين ريال لمرحلة التوسع والنمو."
-                    : "High-capacity facility up to SAR 10M suited for enterprise scaling."}
-                </p>
-              </div>
+              <h5 className="rec-product-name">{t.hero.dashboardPreview.recommendedProduct}</h5>
+              <p className="rec-product-note">
+                {isArabic 
+                  ? "سقف تمويلي حتى 10 ملايين ريال لمرحلة التوسع مع فترة سماح مرنة."
+                  : "Financing capacity up to SAR 10M suited for enterprise scaling."}
+              </p>
             </div>
 
-            {/* Mockup Action Button */}
+            {/* Footer Action */}
             <div className="mockup-footer-btn" onClick={onStartApplication} style={{ cursor: 'pointer' }}>
               <span>{t.hero.dashboardPreview.viewDetails}</span>
-              <ArrowIcon size={16} />
+              <ArrowIcon size={14} />
             </div>
           </div>
         </div>
