@@ -112,6 +112,7 @@ function MainContent() {
               setActivePage('landing');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
+            onOpenScenarioEditor={() => setIsScenarioEditorOpen(true)}
             initialData={currentWizardData}
           />
         )}

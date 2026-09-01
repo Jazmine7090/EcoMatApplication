@@ -11,15 +11,21 @@ import {
   ArrowRight, 
   ArrowLeft, 
   Download, 
-  ExternalLink,
-  ShieldCheck,
-  RotateCcw,
-  Check
+  ExternalLink, 
+  ShieldCheck, 
+  RotateCcw, 
+  Check,
+  HeartHandshake,
+  Calendar,
+  FileCheck2,
+  Users,
+  Briefcase
 } from 'lucide-react';
 
 export function Step6AIResults({ assessmentResult, formData, updateFormData, onEditAgain, onResetAll }) {
   const { t, isArabic } = useLanguage();
   const s = t.wizard.step6;
+  const pRecovery = s.partnersRecovery;
   const ArrowIcon = isArabic ? ArrowLeft : ArrowRight;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +33,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
   const [activeProduct, setActiveProduct] = useState(
     assessmentResult?.productRecommendation?.currentProduct || formData.financingProduct || "Entrepreneurs Financing"
   );
+  const [bookingFeedback, setBookingFeedback] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,10 +43,10 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#00A859', '#D4AF37', '#006C35'],
+          colors: ['#0d684f', '#d67825', '#21684c'],
         });
       }
-    }, 1200);
+    }, 900);
 
     return () => clearTimeout(timer);
   }, [assessmentResult]);
@@ -48,7 +55,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
     return (
       <div className="wizard-step-content ai-loading-container animate-fade-in text-center">
         <div className="ai-scanning-orb animate-pulse-glow">
-          <Sparkles size={48} className="text-gold animate-spin-slow" />
+          <Sparkles size={40} className="text-sdb" />
         </div>
         <h3 className="ai-loading-title">{s.loadingTitle}</h3>
         <p className="ai-loading-sub">{s.loadingSubtitle}</p>
@@ -64,6 +71,8 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
 
   const { score, status, dimensions, strengths, attentionItems, criticalIssues, productRecommendation, nextSteps } = assessmentResult;
   const isReady = score >= 80;
+  const isActionRequired = score >= 65 && score < 80;
+  const isRejected = score < 65;
 
   const handleSwitchProduct = () => {
     setActiveProduct(productRecommendation.recommendedProduct);
@@ -77,9 +86,33 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
       : "EcoMat AI Readiness Diagnostic Report (PDF) downloaded successfully!");
   };
 
+  const handleBookPartner = (partnerName) => {
+    setBookingFeedback(isArabic 
+      ? `تم تقديم طلب استشارة إلى (${partnerName}) بنجاح! سيتواصل معك مستشار معتمد خلال 24 ساعة.` 
+      : `Consultation request for ${partnerName} submitted successfully! A certified advisor will contact you within 24 hours.`);
+    setTimeout(() => {
+      setBookingFeedback(null);
+    }, 5000);
+  };
+
+  const partnerIcons = {
+    sdb_clinics: <Briefcase size={20} className="text-sdb" />,
+    monshaat: <FileCheck2 size={20} className="text-sdb" />,
+    dulani: <HeartHandshake size={20} className="text-sdb" />,
+    socpa: <Users size={20} className="text-sdb" />,
+  };
+
   return (
     <div className="wizard-step-content animate-fade-in">
-      {/* Top Banner with Score */}
+      {/* Toast feedback for partner booking */}
+      {bookingFeedback && (
+        <div className="toast-notification animate-fade-in">
+          <CheckCircle2 size={18} />
+          <span>{bookingFeedback}</span>
+        </div>
+      )}
+
+      {/* Top Banner with Score Dial */}
       <div className="ai-result-hero-card card">
         <div className="result-score-col">
           <div className="result-circular-gauge" style={{ width: 140, height: 140, position: 'relative', margin: '0 auto 16px auto', flexShrink: 0 }}>
@@ -95,7 +128,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
                 strokeDashoffset={427.25 * (1 - score / 100)}
                 fill="none"
                 strokeLinecap="round"
-                style={{ stroke: isReady ? '#0d684f' : score >= 65 ? '#d67825' : '#b91c1c' }}
+                style={{ stroke: isReady ? '#0d684f' : isActionRequired ? '#d67825' : '#b91c1c' }}
               />
             </svg>
             <div className="dial-score-content" style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -103,12 +136,12 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
               <span className="dial-denom" style={{ fontSize: '0.8rem', color: 'var(--navy-400, #677487)', fontWeight: 600 }}>/ 100</span>
             </div>
           </div>
-          <span className={`badge ${isReady ? 'badge-success' : score >= 65 ? 'badge-warning' : 'badge-danger'} text-sm`}>
+          <span className={`badge ${isReady ? 'badge-success' : isActionRequired ? 'badge-warning' : 'badge-danger'} text-sm`}>
             {isReady 
-              ? (isArabic ? "جاهز للتقديم ✓" : "Ready to Apply ✓") 
-              : score >= 65 
-                ? (isArabic ? "يحتاج تحسينات ⚠" : "Needs Attention ⚠") 
-                : (isArabic ? "غير جاهز حالياً 🔴" : "Not Ready 🔴")}
+              ? (isArabic ? "جاهز وقوي ✓" : "Strong / Ready ✓") 
+              : isActionRequired 
+                ? (isArabic ? "يحتاج إجراءات ⚠" : "Action Required ⚠") 
+                : (isArabic ? "غير جاهز / مرفوض 🔴" : "Rejected / Not Ready 🔴")}
           </span>
         </div>
 
@@ -148,10 +181,10 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
 
       {/* Smart Product Recommendation Box */}
       {productRecommendation && (
-        <div className="ai-rec-box card glass-panel mt-6">
+        <div className="ai-rec-box card mt-6">
           <div className="ai-rec-header">
             <div className="rec-icon-group">
-              <Building2 size={20} className="text-primary" />
+              <Building2 size={20} className="text-sdb" />
               <h4 className="rec-box-title">{s.recommendationTitle}</h4>
             </div>
             <span className="badge badge-sdb">
@@ -168,7 +201,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
             {productRecommendation.needsSwitch && !productSwitched && (
               <div className="rec-upgrade-col">
                 <span className="rec-label">{s.recommendedProduct}:</span>
-                <p className="rec-val-text text-primary-800 font-bold">{productRecommendation.recommendedProduct}</p>
+                <p className="rec-val-text text-sdb font-bold">{productRecommendation.recommendedProduct}</p>
               </div>
             )}
           </div>
@@ -182,7 +215,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
                 className="btn btn-primary btn-sm"
                 onClick={handleSwitchProduct}
               >
-                <RefreshCw size={15} />
+                <RefreshCw size={14} />
                 <span>{s.switchBtn}</span>
               </button>
               <button 
@@ -207,7 +240,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
         {/* Strong Areas */}
         <div className="feedback-col card">
           <div className="fb-header text-success">
-            <CheckCircle2 size={20} />
+            <CheckCircle2 size={18} />
             <h4 className="fb-title">{s.strongTitle}</h4>
           </div>
           <ul className="fb-list">
@@ -226,7 +259,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
         {/* Needs Attention */}
         <div className="feedback-col card">
           <div className="fb-header text-warning">
-            <AlertTriangle size={20} />
+            <AlertTriangle size={18} />
             <h4 className="fb-title">{s.attentionTitle}</h4>
           </div>
           <ul className="fb-list">
@@ -245,7 +278,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
         {/* Critical Issues */}
         <div className="feedback-col card">
           <div className="fb-header text-danger">
-            <XCircle size={20} />
+            <XCircle size={18} />
             <h4 className="fb-title">{s.issuesTitle}</h4>
           </div>
           <ul className="fb-list">
@@ -262,8 +295,49 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
         </div>
       </div>
 
+      {/* Recommended Support Partners & Consultancies (Specially for Rejected / Action Required Scenarios) */}
+      {(isRejected || isActionRequired) && pRecovery && (
+        <div className="recovery-partners-container card mt-6">
+          <div className="recovery-partners-header">
+            <div className="header-left-wrap">
+              <span className="badge badge-warning mb-2">
+                <HeartHandshake size={13} /> {isArabic ? "مسار التأهيل والتعافي" : "Recovery & Support Pathway"}
+              </span>
+              <h3 className="section-partner-title">{pRecovery.title}</h3>
+              <p className="section-partner-subtitle">{pRecovery.subtitle}</p>
+            </div>
+          </div>
+
+          <div className="partners-grid-cards">
+            {pRecovery.partners.map((partner) => (
+              <div key={partner.id} className="partner-card">
+                <div className="partner-card-top">
+                  <div className="partner-icon-box">
+                    {partnerIcons[partner.id] || <Building2 size={20} className="text-sdb" />}
+                  </div>
+                  <span className="partner-badge-pill">{partner.badge}</span>
+                </div>
+
+                <h4 className="partner-name">{partner.name}</h4>
+                <small className="partner-entity">{partner.entity}</small>
+                <p className="partner-focus">{partner.focus}</p>
+
+                <button 
+                  type="button" 
+                  className="btn btn-secondary btn-sm w-full partner-action-btn"
+                  onClick={() => handleBookPartner(partner.name)}
+                >
+                  <Calendar size={14} />
+                  <span>{partner.action}</span>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Final SDB Submission Actions */}
-      <div className="ai-results-footer-bar card glass-panel mt-6">
+      <div className="ai-results-footer-bar card mt-6">
         <div className="footer-bar-actions">
           <a 
             href="https://www.sdb.gov.sa/en" 
@@ -272,7 +346,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
             className={`btn ${isReady ? 'btn-primary' : 'btn-secondary'} btn-lg`}
           >
             <span>{s.btnProceedSDB}</span>
-            <ExternalLink size={18} />
+            <ExternalLink size={16} />
           </a>
 
           <button 
@@ -280,7 +354,7 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
             className="btn btn-secondary btn-lg"
             onClick={handleDownloadPDF}
           >
-            <Download size={18} />
+            <Download size={16} />
             <span>{s.btnDownloadReport}</span>
           </button>
 
@@ -289,12 +363,12 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
             className="btn btn-ghost btn-lg"
             onClick={onEditAgain}
           >
-            <RotateCcw size={18} />
+            <RotateCcw size={16} />
             <span>{s.btnEditApp}</span>
           </button>
         </div>
 
-        <div className="sdb-disclaimer-note mt-3">
+        <div className="sdb-disclaimer-note mt-3 text-center">
           <ShieldCheck size={14} className="text-muted flex-shrink-0" />
           <p className="disclaimer-text">{s.disclaimer}</p>
         </div>
