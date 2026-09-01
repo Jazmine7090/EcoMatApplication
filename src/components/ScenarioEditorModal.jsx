@@ -236,7 +236,7 @@ export function ScenarioEditorModal({ isOpen, onClose, onApplyScenario }) {
               <div className="preview-score-center">
                 <div className="score-dial-wrap" style={{ width: '110px', height: '110px' }}>
                   <svg className="score-svg-circle" viewBox="0 0 120 120">
-                    <circle className="score-circle-bg" cx="60" cy="60" r="50" strokeWidth="10" />
+                    <circle className="score-circle-bg" cx="60" cy="60" r="50" strokeWidth="10" fill="none" stroke="#e2e8f0" />
                     <circle 
                       className="score-circle-fill" 
                       cx="60" 
@@ -245,7 +245,9 @@ export function ScenarioEditorModal({ isOpen, onClose, onApplyScenario }) {
                       strokeWidth="10" 
                       strokeDasharray="314.159"
                       strokeDashoffset={314.159 * (1 - liveAssessment.score / 100)}
-                      style={{ stroke: liveAssessment.score >= 80 ? '#00C853' : liveAssessment.score >= 65 ? '#F59E0B' : '#EF4444' }}
+                      fill="none"
+                      strokeLinecap="round"
+                      style={{ stroke: liveAssessment.score >= 80 ? '#0d684f' : liveAssessment.score >= 65 ? '#d67825' : '#b91c1c' }}
                     />
                   </svg>
                   <div className="score-number-box">

@@ -98,7 +98,7 @@ export function Hero({ onStartApplication, onScrollToHowItWorks }) {
             <div className="mockup-score-section">
               <div className="score-dial-wrap">
                 <svg className="score-svg-circle" viewBox="0 0 120 120">
-                  <circle className="score-circle-bg" cx="60" cy="60" r="50" strokeWidth="9" />
+                  <circle className="score-circle-bg" cx="60" cy="60" r="50" strokeWidth="9" fill="none" stroke="#e2e8f0" />
                   <circle
                     className="score-circle-fill"
                     cx="60"
@@ -107,6 +107,9 @@ export function Hero({ onStartApplication, onScrollToHowItWorks }) {
                     strokeWidth="9"
                     strokeDasharray="314.159"
                     strokeDashoffset="40.84"
+                    fill="none"
+                    stroke="#0d684f"
+                    strokeLinecap="round"
                   />
                 </svg>
                 <div className="score-number-box">

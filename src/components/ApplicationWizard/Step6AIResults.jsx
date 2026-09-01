@@ -82,9 +82,9 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
       {/* Top Banner with Score */}
       <div className="ai-result-hero-card card">
         <div className="result-score-col">
-          <div className="result-circular-gauge">
-            <svg className="svg-dial" viewBox="0 0 160 160">
-              <circle className="svg-dial-bg" cx="80" cy="80" r="68" strokeWidth="12" />
+          <div className="result-circular-gauge" style={{ width: 140, height: 140, position: 'relative', margin: '0 auto 16px auto', flexShrink: 0 }}>
+            <svg className="svg-dial" viewBox="0 0 160 160" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)', display: 'block' }}>
+              <circle className="svg-dial-bg" cx="80" cy="80" r="68" strokeWidth="12" fill="none" stroke="#e2e8f0" />
               <circle 
                 className="svg-dial-progress" 
                 cx="80" 
@@ -93,12 +93,14 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
                 strokeWidth="12" 
                 strokeDasharray="427.25"
                 strokeDashoffset={427.25 * (1 - score / 100)}
-                style={{ stroke: isReady ? '#00A859' : score >= 65 ? '#D97706' : '#EF4444' }}
+                fill="none"
+                strokeLinecap="round"
+                style={{ stroke: isReady ? '#0d684f' : score >= 65 ? '#d67825' : '#b91c1c' }}
               />
             </svg>
-            <div className="dial-score-content">
-              <span className="dial-num">{score}</span>
-              <span className="dial-denom">/ 100</span>
+            <div className="dial-score-content" style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              <span className="dial-num" style={{ fontSize: '2.2rem', fontWeight: 800, lineHeight: 1, color: 'var(--navy-900, #14283f)' }}>{score}</span>
+              <span className="dial-denom" style={{ fontSize: '0.8rem', color: 'var(--navy-400, #677487)', fontWeight: 600 }}>/ 100</span>
             </div>
           </div>
           <span className={`badge ${isReady ? 'badge-success' : score >= 65 ? 'badge-warning' : 'badge-danger'} text-sm`}>

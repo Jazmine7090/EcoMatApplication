@@ -53,14 +53,16 @@ export function ReadinessCheckSection({ onStartApplication }) {
               </div>
 
               <div className="score-gauge-center">
-                <div className="circular-score-wrapper">
-                  <svg className="svg-dial" viewBox="0 0 160 160">
+                <div className="circular-score-wrapper" style={{ width: 140, height: 140, position: 'relative', margin: '0 auto 16px auto' }}>
+                  <svg className="svg-dial" viewBox="0 0 160 160" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)', display: 'block' }}>
                     <circle 
                       className="svg-dial-bg" 
                       cx="80" 
                       cy="80" 
                       r="68" 
                       strokeWidth="12" 
+                      fill="none"
+                      stroke="#e2e8f0"
                     />
                     <circle 
                       className="svg-dial-progress" 
@@ -70,11 +72,14 @@ export function ReadinessCheckSection({ onStartApplication }) {
                       strokeWidth="12" 
                       strokeDasharray="427.25"
                       strokeDashoffset={427.25 * (1 - interactiveScore / 100)}
+                      fill="none"
+                      stroke="#0d684f"
+                      strokeLinecap="round"
                     />
                   </svg>
-                  <div className="dial-score-content">
-                    <span className="dial-num">{interactiveScore}</span>
-                    <span className="dial-denom">/ 100</span>
+                  <div className="dial-score-content" style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <span className="dial-num" style={{ fontSize: '2.2rem', fontWeight: 800, lineHeight: 1, color: 'var(--navy-900, #14283f)' }}>{interactiveScore}</span>
+                    <span className="dial-denom" style={{ fontSize: '0.8rem', color: 'var(--navy-400, #677487)', fontWeight: 600 }}>/ 100</span>
                   </div>
                 </div>
                 <p className="score-descriptor-text">
