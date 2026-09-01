@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="sdbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00A859" />
+      <stop offset="100%" stop-color="#006C35" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D" />
+      <stop offset="100%" stop-color="#D4AF37" />
+    </linearGradient>
+  </defs>
+  <!-- Background Shield Shape -->
+  <path d="M50 8L86 22V52C86 73 70.5 90 50 96C29.5 90 14 73 14 52V22L50 8Z" fill="url(#sdbGrad)" />
+  <!-- Inner Ring / Growth Leaf -->
+  <path d="M50 20C50 20 68 34 68 54C68 66 59 76 50 80C41 76 32 66 32 54C32 34 50 20 50 20Z" fill="#FFFFFF" fill-opacity="0.15" />
+  <!-- Central Sprout & Growth Arrow -->
+  <path d="M50 32V68M50 32L40 44M50 32L60 44" stroke="url(#goldGrad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Growth Spark Dot -->
+  <circle cx="50" cy="24" r="4" fill="#FFFFFF" />
+</svg>
