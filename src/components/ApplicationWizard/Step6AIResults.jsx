@@ -184,43 +184,82 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
         <div className="ai-rec-box card mt-6">
           <div className="ai-rec-header">
             <div className="rec-icon-group">
-              <Building2 size={20} className="text-sdb" />
-              <h4 className="rec-box-title">{s.recommendationTitle}</h4>
+              <div className="rec-icon-box">
+                <Building2 size={20} className="text-sdb" />
+              </div>
+              <div>
+                <h4 className="rec-box-title">{s.recommendationTitle}</h4>
+                <span className="rec-box-subtitle">
+                  {isArabic ? "تحليل ذكي لمطابقة بيانات منشأتك مع منتجات بنك التنمية" : "AI alignment between your profile and SDB financing facilities"}
+                </span>
+              </div>
             </div>
             <span className="badge badge-sdb">
               <Sparkles size={12} /> {productRecommendation.matchScore} {s.matchBadge}
             </span>
           </div>
 
-          <div className="ai-rec-body-grid">
-            <div className="rec-current-col">
-              <span className="rec-label">{s.currentSelected}:</span>
-              <p className="rec-val-text font-semibold">{activeProduct}</p>
+          {/* Side-by-Side Visual Comparison Cards */}
+          <div className="rec-comparison-grid">
+            {/* Left Card: Current Selection */}
+            <div className="rec-compare-card current-track-card">
+              <div className="track-status-pill current-pill">
+                <span>{s.currentSelected}</span>
+              </div>
+              <h5 className="track-name">{activeProduct}</h5>
+              <span className="track-sub-note">
+                {isArabic ? "المسار المختار مبدئياً بالطلب" : "Initially selected in form"}
+              </span>
             </div>
 
+            {/* Middle Arrow Connector */}
             {productRecommendation.needsSwitch && !productSwitched && (
-              <div className="rec-upgrade-col">
-                <span className="rec-label">{s.recommendedProduct}:</span>
-                <p className="rec-val-text text-sdb font-bold">{productRecommendation.recommendedProduct}</p>
+              <div className="rec-arrow-connector">
+                <div className="arrow-circle-badge">
+                  <ArrowIcon size={18} />
+                </div>
+                <span className="arrow-text">{isArabic ? "الترقية المقترحة" : "Better Match"}</span>
+              </div>
+            )}
+
+            {/* Right Card: Recommended Product */}
+            {productRecommendation.needsSwitch && !productSwitched && (
+              <div className="rec-compare-card recommended-track-card">
+                <div className="track-status-pill optimal-pill">
+                  <Sparkles size={12} />
+                  <span>{s.recommendedProduct}</span>
+                </div>
+                <h5 className="track-name text-sdb">{productRecommendation.recommendedProduct}</h5>
+                <span className="track-sub-note text-sdb-highlight">
+                  {isArabic ? "✓ تطابق أعلى مع مرحلة منشأتك وتدفقاتك" : "✓ Higher alignment with your stage & turnover"}
+                </span>
               </div>
             )}
           </div>
 
-          <p className="rec-explanation-text">{productRecommendation.reason}</p>
+          {/* Reason Explanation Callout */}
+          <div className="rec-reason-callout">
+            <div className="reason-callout-header">
+              <ShieldCheck size={16} className="text-sdb" />
+              <strong>{isArabic ? "لماذا هذه التوصية؟" : "Why this recommendation?"}</strong>
+            </div>
+            <p className="rec-explanation-text">{productRecommendation.reason}</p>
+          </div>
 
+          {/* Action Buttons */}
           {productRecommendation.needsSwitch && !productSwitched ? (
             <div className="rec-action-buttons">
               <button 
                 type="button" 
-                className="btn btn-primary btn-sm"
+                className="btn btn-primary btn-md"
                 onClick={handleSwitchProduct}
               >
-                <RefreshCw size={14} />
+                <RefreshCw size={15} />
                 <span>{s.switchBtn}</span>
               </button>
               <button 
                 type="button" 
-                className="btn btn-secondary btn-sm"
+                className="btn btn-secondary btn-md"
                 onClick={() => setProductSwitched(true)}
               >
                 <span>{s.keepBtn}</span>
@@ -228,8 +267,11 @@ export function Step6AIResults({ assessmentResult, formData, updateFormData, onE
             </div>
           ) : productSwitched ? (
             <div className="rec-switched-alert">
-              <Check size={16} className="text-success" />
-              <span>{s.productSwitched}</span>
+              <Check size={18} className="text-sdb" />
+              <div>
+                <strong>{s.productSwitched}</strong>
+                <p className="text-xs text-sdb-600">{activeProduct}</p>
+              </div>
             </div>
           ) : null}
         </div>
